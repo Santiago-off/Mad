@@ -135,7 +135,8 @@ export default function AdminPage() {
     { id: 'users', name: 'Usuarios', icon: Users, href: '/dashboard/admin/users', color: 'primary' },
     { id: 'subscriptions', name: 'Suscripciones', icon: CreditCard, href: '/dashboard/admin/subscriptions', color: 'secondary' },
     { id: 'tickets', name: 'Tickets', icon: TicketIcon, href: '/dashboard/admin/tickets', color: 'primary' },
-    { id: 'finances', name: 'Finanzas', icon: DollarSign, href: '/dashboard/admin/finances', color: 'secondary' }
+    { id: 'finances', name: 'Finanzas', icon: DollarSign, href: '/dashboard/admin/finances', color: 'secondary' },
+    { id: 'settings', name: 'Configuración', icon: Settings, href: '/dashboard/admin/settings', color: 'primary' }
   ];
 
   return (

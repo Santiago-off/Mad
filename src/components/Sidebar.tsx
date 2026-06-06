@@ -63,6 +63,7 @@ export default function Sidebar({
     { id: 'admin-subscriptions', label: 'Suscripciones', icon: <CreditCard size={20} />, href: '/dashboard/admin/subscriptions' },
     { id: 'admin-tickets', label: 'Tickets', icon: <TicketIcon size={20} />, href: '/dashboard/admin/tickets' },
     { id: 'admin-finances', label: 'Finanzas', icon: <BarChart3 size={20} />, href: '/dashboard/admin/finances' },
+    { id: 'admin-settings', label: 'Configuración', icon: <Settings size={20} />, href: '/dashboard/admin/settings' },
   ];
 
   const SidebarContent = () => (

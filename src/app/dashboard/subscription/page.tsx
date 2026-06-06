@@ -94,12 +94,14 @@ export default function SubscriptionPage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [paypalAddress, setPaypalAddress] = useState('No disponible');
 
   const fetchData = useCallback(async () => {
     try {
-      const [profileRes, subRes] = await Promise.all([
+      const [profileRes, subRes, settingsRes] = await Promise.all([
         supabase.from('profiles').select('*').eq('id', user?.id).single(),
-        supabase.from('subscriptions').select('*').eq('user_id', user?.id).order('created_at', { ascending: false }).limit(1).single()
+        supabase.from('subscriptions').select('*').eq('user_id', user?.id).order('created_at', { ascending: false }).limit(1).single(),
+        supabase.from('settings').select('*').eq('key', 'paypal_address').single()
       ]);
 
       if (profileRes.data) {
@@ -110,6 +112,7 @@ export default function SubscriptionPage() {
         }
       }
       if (subRes.data) setSubscription(subRes.data);
+      if (settingsRes.data) setPaypalAddress(settingsRes.data.value);
     } catch (err) {
       console.error('Error fetching data:', err);
     } finally {
@@ -211,7 +214,7 @@ export default function SubscriptionPage() {
               description: `Solicitud de Suscripción ${planNames[planId]} - Pendiente de Aprobación`,
               invoice_date: new Date().toISOString(),
               due_date: nextRenewal.toISOString(),
-              paypal_address: 'pagos@madagency.com',
+              paypal_address: paypalAddress,
               payment_subject: paymentSubject
             }
           ]);

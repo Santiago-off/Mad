@@ -544,3 +544,45 @@ EXCEPTION
   WHEN undefined_object THEN NULL;
   WHEN others THEN NULL;
 END $$;
+
+-- =============================================
+-- 6. Settings table for global configuration
+-- =============================================
+CREATE TABLE IF NOT EXISTS settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Insert default settings
+INSERT INTO settings (key, value)
+VALUES ('paypal_address', 'No disponible')
+ON CONFLICT (key) DO NOTHING;
+
+-- Enable RLS on settings
+ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
+
+-- Create policies for settings
+CREATE POLICY "Everyone can view settings" ON settings
+FOR SELECT USING (true);
+
+CREATE POLICY "Admins can update settings" ON settings
+FOR ALL USING (public.is_admin(auth.uid()));
+
+-- Add settings to realtime
+DO $$ 
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_tables WHERE tablename = 'settings') THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM pg_publication_tables 
+      WHERE pubname = 'supabase_realtime' 
+      AND tablename = 'settings'
+    ) THEN
+      ALTER PUBLICATION supabase_realtime ADD TABLE settings;
+    END IF;
+  END IF;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  WHEN undefined_object THEN NULL;
+  WHEN others THEN NULL;
+END $$;
