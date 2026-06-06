@@ -351,7 +351,7 @@ export default function SubscriptionPage() {
 
         {subscription?.status === 'pending_approval' && (
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-3 md:p-4 mb-6 md:mb-8 flex items-start gap-3">
-            <Clock className="text-yellow-500 shrink-0" size={20} className="md:w-6 md:h-6" />
+            <Clock className="text-yellow-500 shrink-0 w-5 h-5 md:w-6 md:h-6" size={20} />
             <div>
               <h4 className="font-bold text-yellow-500 text-sm md:text-base">Solicitud Pendiente</h4>
               <p className="text-xs md:text-sm text-yellow-500/80">Tu solicitud de plan está siendo revisada por un administrador. Recibirás una notificación cuando sea aprobada o denegada.</p>
