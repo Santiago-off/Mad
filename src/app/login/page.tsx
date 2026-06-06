@@ -36,7 +36,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 relative">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8 relative">
       {/* Background Grid */}
       <div className="absolute inset-0" style={{
         backgroundImage: `
@@ -46,50 +46,51 @@ export default function LoginPage() {
         backgroundSize: '40px 40px'
       }} />
 
-      <div className="max-w-sm w-full bg-card border border-border rounded-2xl p-6 shadow-2xl relative z-10">
-        <div className="flex items-center justify-center gap-2 mb-5">
+      <div className="max-w-sm w-full bg-card border border-border rounded-2xl p-6 md:p-8 shadow-2xl relative z-10">
+        <div className="flex items-center justify-center gap-2 md:gap-3 mb-6">
           <Image
             src="/logo.png"
             alt="MAD Agency"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
+            priority
             style={{ background: 'transparent' }}
           />
-          <div className="text-xl font-black tracking-tighter">
+          <div className="text-lg md:text-xl font-black tracking-tighter">
             MAD<span className="text-accent-primary">AGENCY</span>
           </div>
         </div>
 
-        <h1 className="text-2xl font-black text-center mb-1">Iniciar Sesión</h1>
-        <p className="text-foreground/60 text-center mb-6 text-sm">Accede a tu cuenta</p>
+        <h1 className="text-xl md:text-2xl font-black text-center mb-2">Iniciar Sesión</h1>
+        <p className="text-foreground/60 text-center mb-6 text-xs md:text-sm">Accede a tu cuenta</p>
 
         {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-3 py-2 rounded-lg mb-4 text-sm">
+          <div className="bg-red-500/10 border border-red-500 text-red-500 px-3 md:px-4 py-2 md:py-3 rounded-lg mb-4 md:mb-6 text-xs md:text-sm">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4 md:space-y-5">
           <div>
-            <label className="block text-xs font-bold mb-1">Email</label>
+            <label className="block text-xs md:text-sm font-bold mb-1 md:mb-2">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:border-accent-primary transition-colors text-sm"
+              className="w-full bg-background border border-border rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-foreground focus:outline-none focus:border-accent-primary transition-colors"
               placeholder="tu@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold mb-1">Contraseña</label>
+            <label className="block text-xs md:text-sm font-bold mb-1 md:mb-2">Contraseña</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-foreground focus:outline-none focus:border-accent-primary transition-colors text-sm"
+              className="w-full bg-background border border-border rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-foreground focus:outline-none focus:border-accent-primary transition-colors"
               placeholder="••••••••"
             />
           </div>
@@ -97,14 +98,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-accent-primary text-black font-black py-2.5 rounded-lg hover:bg-accent-primary/80 transition-all disabled:opacity-50 text-sm"
+            className="w-full bg-accent-primary text-black font-black py-2.5 md:py-3 rounded-lg hover:bg-accent-primary/80 transition-all disabled:opacity-50 text-sm md:text-base"
           >
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
           </button>
         </form>
 
-        <div className="mt-5 text-center">
-          <p className="text-foreground/60 text-xs">
+        <div className="mt-5 md:mt-6 text-center">
+          <p className="text-foreground/60 text-xs md:text-sm">
             ¿No tienes cuenta?{' '}
             <Link href="/signup" className="text-accent-primary font-bold hover:underline">
               Regístrate
@@ -112,8 +113,8 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className="mt-3 text-center">
-          <Link href="/" className="text-foreground/40 text-xs hover:underline">
+        <div className="mt-3 md:mt-4 text-center">
+          <Link href="/" className="text-foreground/40 text-xs md:text-sm hover:underline">
             ← Volver a la página principal
           </Link>
         </div>

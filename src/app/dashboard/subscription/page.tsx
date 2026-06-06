@@ -30,8 +30,11 @@ const plans = [
     id: 'prueba',
     name: 'Plan de Prueba',
     price: 'Gratuito',
-    description: 'Prueba nuestros servicios sin compromiso',
-    features: ['Visibilidad básica', 'Soporte por email', '1 semana de duración'],
+    description: 'Empieza a crecer sin compromiso.',
+    features: [
+      'Visibilidad',
+      'Pequeña estrategia para implementar tu impacto en redes'
+    ],
     accent: 'primary',
     priceValue: 0
   },
@@ -39,8 +42,13 @@ const plans = [
     id: 'basico',
     name: 'Plan Básico',
     price: '10€/mes',
-    description: 'Para empezar a crecer en las plataformas',
-    features: ['Visibilidad en redes', 'Gestión de ofertas', 'Soporte prioritario', 'Estrategia básica'],
+    description: 'Para perfiles que están empezando a crecer.',
+    features: [
+      'Visibilidad en redes',
+      'Gestión de ofertas',
+      'Búsqueda de organización',
+      'Estrategia básica para implementar tu impacto en redes'
+    ],
     accent: 'primary',
     popular: true,
     priceValue: 10
@@ -49,8 +57,14 @@ const plans = [
     id: 'plus',
     name: 'Plan Plus',
     price: '20€/mes',
-    description: 'Para perfiles en crecimiento que quieren más',
-    features: ['Visibilidad avanzada', 'Gestión completa', 'Soporte 24/7', 'Estrategia avanzada', 'Colaboraciones'],
+    description: 'Para perfiles en crecimiento que quieren más.',
+    features: [
+      'Visibilidad en redes',
+      'Gestión de ofertas',
+      'Búsqueda de organización',
+      'Estrategia más avanzada para implementar tu impacto en redes',
+      'Conexiones con marcas y colaboraciones'
+    ],
     accent: 'secondary',
     priceValue: 20
   },
@@ -58,8 +72,16 @@ const plans = [
     id: 'pro',
     name: 'Plan Pro',
     price: '35€/mes',
-    description: 'Para quienes quieren llegar al siguiente nivel',
-    features: ['Todo el plan Plus', 'Edición de vídeo', 'Miniaturas personalizadas', 'Dedicación exclusiva'],
+    description: 'Para quienes quieren llegar al siguiente nivel.',
+    features: [
+      'Visibilidad en redes',
+      'Gestión de ofertas',
+      'Búsqueda de organización',
+      'Estrategia completa para implementar tu impacto en redes',
+      'Conexiones con marcas y colaboraciones',
+      '1 video editado',
+      '1 miniatura'
+    ],
     accent: 'secondary',
     priceValue: 35
   }
@@ -271,43 +293,43 @@ export default function SubscriptionPage() {
         userName={profile?.full_name || 'Usuario'}
       />
 
-      <main className="flex-1 p-6 md:p-12 max-w-6xl mx-auto overflow-y-auto">
-        <header className="mb-12">
-          <h1 className="text-3xl font-black mb-2">Gestionar Suscripción</h1>
-          <p className="text-foreground/60">Cambia o actualiza tu plan</p>
+      <main className="flex-1 p-4 md:p-12 max-w-6xl mx-auto overflow-y-auto pt-20 md:pt-12">
+        <header className="mb-8 md:mb-12">
+          <h1 className="text-2xl md:text-3xl font-black mb-2">Gestionar Suscripción</h1>
+          <p className="text-foreground/60 text-sm md:text-base">Cambia o actualiza tu plan</p>
         </header>
 
         {message && (
-          <div className={`mb-8 p-4 rounded-xl flex items-center gap-3 ${
+          <div className={`mb-6 md:mb-8 p-3 md:p-4 rounded-xl flex items-center gap-2 md:gap-3 ${
             message.type === 'success' ? 'bg-green-500/10 border border-green-500 text-green-500' :
             message.type === 'error' ? 'bg-red-500/10 border border-red-500 text-red-500' :
             'bg-blue-500/10 border border-blue-500 text-blue-500'
           }`}>
-            {message.type === 'info' && <AlertCircle size={20} />}
-            {message.type === 'success' && <Check size={20} />}
-            {message.type === 'error' && <X size={20} />}
-            {message.text}
+            {message.type === 'info' && <AlertCircle size={18} className="md:w-5 md:h-5" />}
+            {message.type === 'success' && <Check size={18} className="md:w-5 md:h-5" />}
+            {message.type === 'error' && <X size={18} className="md:w-5 md:h-5" />}
+            <span className="text-sm md:text-base">{message.text}</span>
           </div>
         )}
 
         {/* Current Subscription */}
         {subscription && (
-          <div className="p-8 rounded-3xl bg-card border border-border mb-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <Zap size={120} />
+          <div className="p-6 md:p-8 rounded-2xl md:rounded-3xl bg-card border border-border mb-8 md:mb-12 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-3 md:p-4 opacity-10">
+              <Zap size={80} className="md:w-30 md:h-30" />
             </div>
-            <h2 className="text-xl font-black mb-6">Tu Plan Actual</h2>
-            <div className="flex items-center justify-between flex-wrap gap-6">
+            <h2 className="text-lg md:text-xl font-black mb-4 md:mb-6">Tu Plan Actual</h2>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
               <div>
-                <div className="flex items-baseline gap-4">
-                  <span className="text-3xl font-black">
+                <div className="flex items-baseline gap-2 md:gap-4">
+                  <span className="text-2xl md:text-3xl font-black">
                     {plans.find(p => p.id === subscription.plan_type)?.name}
                   </span>
-                  <span className="text-xl text-accent-primary font-bold">
+                  <span className="text-lg md:text-xl text-accent-primary font-bold">
                     {plans.find(p => p.id === subscription.plan_type)?.price}
                   </span>
                 </div>
-                <p className="text-foreground/60 mt-2">
+                <p className="text-foreground/60 mt-1 md:mt-2 text-sm md:text-base">
                   Estado: {
                     subscription.status === 'active' ? 'Activo' :
                     subscription.status === 'pending_approval' ? 'Pendiente de Aprobación' :
@@ -315,64 +337,64 @@ export default function SubscriptionPage() {
                     'Desconocido'
                   }
                 </p>
-                <p className="text-foreground/60 mt-1">
+                <p className="text-foreground/60 mt-1 text-sm md:text-base">
                   Desde {formatDate(subscription.start_date)}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-foreground/60">Próxima renovación</p>
-                <p className="font-bold">{formatDate(subscription.next_renewal)}</p>
+              <div className="text-left md:text-right">
+                <p className="text-xs md:text-sm text-foreground/60">Próxima renovación</p>
+                <p className="font-bold text-sm md:text-base">{formatDate(subscription.next_renewal)}</p>
               </div>
             </div>
           </div>
         )}
 
         {subscription?.status === 'pending_approval' && (
-          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-4 mb-8 flex items-center gap-3">
-            <Clock className="text-yellow-500" size={24} />
+          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-3 md:p-4 mb-6 md:mb-8 flex items-start gap-3">
+            <Clock className="text-yellow-500 shrink-0" size={20} className="md:w-6 md:h-6" />
             <div>
-              <h4 className="font-bold text-yellow-500">Solicitud Pendiente</h4>
-              <p className="text-sm text-yellow-500/80">Tu solicitud de plan está siendo revisada por un administrador. Recibirás una notificación cuando sea aprobada o denegada.</p>
+              <h4 className="font-bold text-yellow-500 text-sm md:text-base">Solicitud Pendiente</h4>
+              <p className="text-xs md:text-sm text-yellow-500/80">Tu solicitud de plan está siendo revisada por un administrador. Recibirás una notificación cuando sea aprobada o denegada.</p>
             </div>
           </div>
         )}
 
         {/* Available Plans */}
-        <h2 className="text-2xl font-black mb-8">Selecciona tu Plan</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <h2 className="text-xl md:text-2xl font-black mb-6 md:mb-8">Selecciona tu Plan</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
           {plans.map(plan => (
             <div
               key={plan.id}
-              className={`relative p-8 rounded-3xl border-2 transition-all hover:-translate-y-2 ${
+              className={`relative p-6 md:p-8 rounded-2xl md:rounded-3xl border-2 transition-all hover:-translate-y-1 md:hover:-translate-y-2 ${
                 subscription?.status === 'pending_approval' ? 'opacity-50 cursor-not-allowed' : ''
               } ${
-                currentPlan === plan.id ? 'border-accent-primary bg-card shadow-2xl' :
-                plan.popular ? 'border-accent-primary bg-card shadow-xl' :
+                currentPlan === plan.id ? 'border-accent-primary bg-card shadow-xl md:shadow-2xl' :
+                plan.popular ? 'border-accent-primary bg-card shadow-lg md:shadow-xl' :
                 'border-border bg-card hover:border-accent-primary/50'
               }`}
             >
               {plan.popular && currentPlan !== plan.id && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent-primary text-black px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 bg-accent-primary text-black px-3 md:px-4 py-0.5 md:py-1 rounded-full text-xs font-bold shadow-lg">
                   RECOMENDADO
                 </div>
               )}
               {currentPlan === plan.id && subscription?.status === 'active' && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-3 md:px-4 py-0.5 md:py-1 rounded-full text-xs font-bold shadow-lg">
                   TU PLAN ACTUAL
                 </div>
               )}
 
-              <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-3xl font-black">{plan.price}</span>
+              <h3 className="text-lg md:text-xl font-bold mb-2">{plan.name}</h3>
+              <div className="flex items-baseline gap-1 mb-4 md:mb-6">
+                <span className="text-2xl md:text-3xl font-black">{plan.price}</span>
               </div>
-              <p className="text-foreground/60 mb-8">{plan.description}</p>
+              <p className="text-foreground/60 mb-6 md:mb-8 text-sm md:text-base">{plan.description}</p>
 
-              <ul className="space-y-4 mb-10">
+              <ul className="space-y-3 md:space-y-4 mb-8 md:mb-10">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 shrink-0 text-accent-primary" />
-                    <span className="text-foreground/80">{feature}</span>
+                  <li key={index} className="flex items-start gap-2 md:gap-3">
+                    <Check className="w-4 h-4 md:w-5 md:h-5 shrink-0 text-accent-primary" />
+                    <span className="text-foreground/80 text-sm md:text-base">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -380,7 +402,7 @@ export default function SubscriptionPage() {
               <button
                 onClick={() => handleSelectPlan(plan.id)}
                 disabled={loading || (currentPlan === plan.id && subscription?.status === 'active') || subscription?.status === 'pending_approval'}
-                className={`w-full py-3 rounded-xl font-bold transition-all ${
+                className={`w-full py-2.5 md:py-3 rounded-xl font-bold transition-all text-sm md:text-base ${
                   currentPlan === plan.id && subscription?.status === 'active'
                     ? 'bg-foreground/10 text-foreground/50 cursor-not-allowed'
                     : plan.accent === 'primary'

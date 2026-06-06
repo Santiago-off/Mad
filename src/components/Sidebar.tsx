@@ -68,7 +68,7 @@ export default function Sidebar({
   const SidebarContent = () => (
     <div className="flex flex-col bg-card h-full w-full md:w-72 border-r border-border">
       <div className="flex items-center justify-between p-6 border-b border-border md:border-b-0">
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
           <Image
             src="/logo.png"
             alt="MAD Agency Logo"
@@ -80,7 +80,7 @@ export default function Sidebar({
           <div className="text-xl font-black tracking-tighter">
             MAD<span className="text-accent-primary">AGENCY</span>
           </div>
-        </div>
+        </Link>
         <button
           onClick={() => setMobileMenuOpen(false)}
           className="md:hidden p-2 hover:bg-foreground/10 rounded-xl transition-all"
@@ -153,7 +153,7 @@ export default function Sidebar({
     <>
       {/* Mobile Header with Hamburger */}
       <div className="md:hidden fixed top-0 left-0 right-0 bg-card border-b border-border p-4 z-50 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Image
             src="/logo.png"
             alt="MAD Agency Logo"
@@ -165,7 +165,7 @@ export default function Sidebar({
           <div className="text-lg font-black tracking-tighter">
             MAD<span className="text-accent-primary">AGENCY</span>
           </div>
-        </div>
+        </Link>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="p-2 hover:bg-foreground/10 rounded-xl transition-all"
