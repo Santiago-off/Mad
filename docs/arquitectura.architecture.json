@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Portal de clientes",
+    "output": "arquitectura.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "acceso",
+        "label": "Acceso",
+        "focus": ["cliente", "app", "auth", "rls"],
+        "note": "Supabase Auth resuelve la sesión y las políticas de fila deciden qué filas ve cada quien."
+      },
+      {
+        "id": "cliente",
+        "label": "Área de cliente",
+        "focus": ["app", "perfiles", "subs", "facturas"],
+        "note": "Cada cliente ve su perfil, su suscripción y sus facturas, y ninguna fila más."
+      },
+      {
+        "id": "admin",
+        "label": "Administración",
+        "focus": ["rls", "tickets", "registro", "finanzas"],
+        "note": "El área de administración añade tickets de todos, traza de actividad y métricas de negocio."
+      }
+    ]
+  },
+  "components": [
+    { "id": "cliente", "type": "external", "label": "Cliente", "sublabel": "Navegador", "pos": [40, 335], "size": [150, 60] },
+    { "id": "app", "type": "frontend", "label": "Next.js 16", "sublabel": "App Router", "pos": [290, 332], "size": [175, 66], "tag": "React 19" },
+    { "id": "auth", "type": "security", "label": "Supabase Auth", "sublabel": "sesión", "pos": [590, 140], "size": [190, 62] },
+    { "id": "rls", "type": "security", "label": "Row Level Security", "sublabel": "políticas por fila", "pos": [590, 332], "size": [190, 66], "tag": "is_admin()" },
+    { "id": "perfiles", "type": "database", "label": "profiles", "sublabel": "rol", "pos": [1060, 100], "size": [150, 56] },
+    { "id": "subs", "type": "database", "label": "subscriptions", "sublabel": "planes", "pos": [1060, 195], "size": [150, 56] },
+    { "id": "facturas", "type": "database", "label": "invoices", "sublabel": "facturas", "pos": [1060, 290], "size": [150, 56] },
+    { "id": "tickets", "type": "database", "label": "tickets", "sublabel": "y mensajes", "pos": [1060, 385], "size": [150, 56] },
+    { "id": "registro", "type": "database", "label": "activity_log", "sublabel": "traza", "pos": [1060, 480], "size": [150, 56] },
+    { "id": "finanzas", "type": "database", "label": "financial_metrics", "sublabel": "negocio", "pos": [1060, 575], "size": [150, 56] }
+  ],
+  "boundaries": [
+    { "kind": "security-group", "label": "PostgreSQL · acceso por RLS", "wraps": ["perfiles", "subs", "facturas", "tickets", "registro", "finanzas"] }
+  ],
+  "connections": [
+    { "id": "entrada", "from": "cliente", "to": "app", "label": "HTTPS", "variant": "emphasis" },
+    { "id": "sesion", "from": "app", "to": "auth", "label": "inicio de sesión", "variant": "security", "fromSide": "top", "toSide": "left", "labelAt": [520, 245] },
+    { "id": "consulta", "from": "app", "to": "rls", "label": "consultas", "variant": "emphasis", "labelAt": [527, 350] },
+    { "id": "c-perfiles", "from": "rls", "to": "perfiles", "via": [[830, 365], [830, 128]] },
+    { "id": "c-subs", "from": "rls", "to": "subs", "via": [[870, 365], [870, 223]] },
+    { "id": "c-facturas", "from": "rls", "to": "facturas", "via": [[910, 365], [910, 318]] },
+    { "id": "c-tickets", "from": "rls", "to": "tickets", "via": [[910, 365], [910, 413]] },
+    { "id": "c-registro", "from": "rls", "to": "registro", "via": [[870, 365], [870, 508]] },
+    { "id": "c-finanzas", "from": "rls", "to": "finanzas", "label": "solo admin", "variant": "security", "via": [[830, 365], [830, 603]], "labelAt": [975, 603] }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Cliente",
+      "items": [
+        "Next.js 16 con App Router y React 19",
+        "Área de cliente y área de administración separadas",
+        "Servicios, facturación, suscripción, soporte y actividad"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Datos",
+      "items": [
+        "Ocho tablas, todas con RLS activado",
+        "El perfil se crea por disparador al registrarse el usuario",
+        "updated_at mantenido por disparador, no desde el cliente"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Autorización",
+      "items": [
+        "Cada tabla tiene su política de usuario y su política de admin",
+        "is_admin() es SECURITY DEFINER: evita la recursión infinita",
+        "Las métricas financieras no tienen ninguna política de usuario"
+      ]
+    }
+  ]
+}
